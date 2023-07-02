@@ -1,5 +1,3 @@
-
-
 import 'package:shopping_list_app/data/categories.dart';
 import '../models/category.dart';
 import '../models/grocery_item.dart';
