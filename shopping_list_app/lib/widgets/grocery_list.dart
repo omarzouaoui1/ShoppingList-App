@@ -14,7 +14,14 @@ class GroceryList extends StatelessWidget {
         itemCount: groceryItems.length,
         itemBuilder: (ctx, index) => ListTile(
           title: Text(groceryItems[index].name),
-          // leading: ,
+          leading: Container(
+            width: 22,
+            height: 22,
+            color: groceryItems[index].category.color,
+          ),
+          trailing: Text(
+            groceryItems[index].quantity.toString(),
+          ),
         ),
       ),
     );
