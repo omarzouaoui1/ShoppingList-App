@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+
 import 'package:shopping_list_app/models/grocery_item.dart';
 import 'package:shopping_list_app/widgets/new_item.dart';
 
@@ -12,20 +15,30 @@ class GroceryList extends StatefulWidget {
 class _GroceryListState extends State<GroceryList> {
   final List<GroceryItem> _groceryItems = [];
 
+  @override
+  void initState() {
+    super.initState();
+    _loadItems();
+  }
+
+  void _loadItems() async {
+    final url = Uri.https(
+      'shoppinglistapp-f1b43-default-rtdb.firebaseio.com',
+      'shopping-list.json',
+    );
+    final response = await http.get(url);
+    print(response.body);
+    
+  }
+
   //function to move to NewItem screen
   void _addItem() async {
-    final newItem = await Navigator.of(context).push<GroceryItem>(
+    await Navigator.of(context).push<GroceryItem>(
       MaterialPageRoute(
         builder: (ctx) => const NewItem(),
       ),
     );
-    //we're passing the context when we pop and store it in newItem variable
-    if (newItem == null) {
-      return;
-    }
-    setState(() {
-      _groceryItems.add(newItem);
-    });
+    _loadItems();
   }
 
   //delete item
