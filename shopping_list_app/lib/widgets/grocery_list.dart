@@ -31,10 +31,11 @@ class _GroceryListState extends State<GroceryList> {
     final url = Uri.https(
       'shoppinglistapp-f1b43-default-rtdb.firebaseio.com',
       'shopping-list.json',
-    );
+    );  
+    try{
     final response = await http.get(url);
 
-    if (response.statusCode >= 400) {
+        if (response.statusCode >= 400) {
       setState(() {
         _error = 'Failed to fetch data. Please try again later.';
       });
@@ -67,6 +68,11 @@ class _GroceryListState extends State<GroceryList> {
       _groceryItems = loadedItems;
       _isLoading = false;
     });
+    } catch (error) { 
+            setState(() {
+        _error = 'Something went wrong!. Please try again later.';
+      });
+    }
   }
 
   //function to move to NewItem screen
@@ -156,7 +162,7 @@ class _GroceryListState extends State<GroceryList> {
           ),
         ],
       ),
-      body: content,
+      body: content
     );
   }
 }
